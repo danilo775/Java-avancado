@@ -11,6 +11,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
+import com.github.javafaker.Faker;
 import com.nilosoft.product.model.User;
 import com.nilosoft.product.repository.UserRepository;
 
@@ -29,7 +30,8 @@ class UserServiceTest {
 
     @Test
     void testFindById() {
-        User user = new User(1L, "Test", "test@test.com", "1234567890", "password");
+    	Faker faker = new Faker();
+        User user = new User(1L,faker.name().fullName(), faker.internet().emailAddress(), faker.phoneNumber().cellPhone(),faker.internet().password());
         when(userRepository.findById(1L)).thenReturn(Optional.of(user));
 
         User foundUser = userService.findById(1L);
@@ -44,7 +46,8 @@ class UserServiceTest {
 
     @Test
     void testSave() {
-        User user = new User(1L, "Test", "test@test.com", "1234567890", "password");
+    	Faker faker = new Faker();
+        User user = new User(1L,faker.name().fullName(), faker.internet().emailAddress(), faker.phoneNumber().cellPhone(),faker.internet().password());
         when(userRepository.save(any(User.class))).thenReturn(user);
 
         User savedUser = userService.save(user);
@@ -67,7 +70,8 @@ class UserServiceTest {
 
     @Test
     void testUpdate() {
-        User user = new User(1L, "Test", "test@test.com", "1234567890", "password");
+    	Faker faker = new Faker();
+        User user = new User(1L,faker.name().fullName(), faker.internet().emailAddress(), faker.phoneNumber().cellPhone(),faker.internet().password());
         when(userRepository.findById(1L)).thenReturn(Optional.of(user));
         when(userRepository.save(any(User.class))).thenReturn(user);
 
